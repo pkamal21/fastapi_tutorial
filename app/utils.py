@@ -1,5 +1,9 @@
 from fastapi import HTTPException, status
 from passlib.context import CryptContext
+from app.models import Stock
+from sqlalchemy.orm import Session
+from app.database import get_db
+from fastapi import Depends
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated="auto")
 

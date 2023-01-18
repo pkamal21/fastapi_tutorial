@@ -19,10 +19,10 @@ def create_user(user: schemas.UserInput, db: Session = Depends(get_db)):
                             detail="Enter correct email")
     
     hashed_pwd = utils.get_hash(user.password)
+    print(user.dict())
     user.password = hashed_pwd
     user = models.User(**user.dict())
     db.add(user)
     db.commit()
     db.refresh(user)
     return user
-

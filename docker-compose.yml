@@ -1,0 +1,31 @@
+version: '3'
+services:
+  api:
+    build: .
+    depends_on:
+      - postgres
+    ports: 
+      - 8000:8000
+    volumes:
+      - ./:/usr/src/app:ro
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      - DATABASE_HOSTNAME=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_PASSWORD=realmadrid
+      - database_name=postgres
+      - database_username=postgres
+      - secret_key=27752c4bbbe05d6a254768235e15fc98a1b04023c38eaef4d0a1ea7d4e5dff7f
+      - algorithm=HS256
+      - access_token_expire_minutes=180
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=realmadrid
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+volumes:
+  postgres-db: 
